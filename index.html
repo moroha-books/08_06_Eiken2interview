@@ -1,0 +1,584 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>英検2級 面接練習</title>
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#ffffff; --ink:#1f2328; --sub:#5b6370; --line:#dedbd2;
+  --accent:#1f5fa8; --accent-weak:#e6eef8; --good:#1e7a46; --warn:#b5541c; --card:#fffdf6;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#16181c; --panel:#1f2227; --ink:#e8e6e1; --sub:#a3a9b3; --line:#343840;
+    --accent:#6ea8ec; --accent-weak:#1d2a3a; --good:#5cc48a; --warn:#e69a62; --card:#24262b; }
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;line-height:1.7}
+header{position:sticky;top:0;z-index:5;background:var(--panel);border-bottom:1px solid var(--line)}
+.hwrap{max-width:980px;margin:0 auto;padding:10px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+h1{font-size:17px;margin:0 12px 0 0}
+nav button{border:1px solid var(--line);background:transparent;color:var(--ink);padding:6px 14px;border-radius:999px;cursor:pointer;font-size:14px}
+nav button.on{background:var(--accent);border-color:var(--accent);color:#fff}
+main{max-width:980px;margin:0 auto;padding:20px 16px 80px}
+section.tab{display:none} section.tab.on{display:block}
+h2{font-size:20px;margin:28px 0 10px} h3{font-size:16px;margin:22px 0 8px}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0}
+.muted{color:var(--sub);font-size:14px}
+.en{font-family:Georgia,"Times New Roman",serif;font-size:17px}
+table{border-collapse:collapse;width:100%;font-size:14px}
+td,th{border-bottom:1px solid var(--line);padding:8px 6px;text-align:left;vertical-align:top}
+.flow{counter-reset:f;list-style:none;padding:0;margin:0}
+.flow li{position:relative;padding:10px 0 10px 44px;border-left:2px solid var(--line);margin-left:14px}
+.flow li::before{counter-increment:f;content:counter(f);position:absolute;left:-15px;top:10px;width:28px;height:28px;border-radius:50%;background:var(--accent);color:#fff;font-size:13px;display:flex;align-items:center;justify-content:center}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:999px;background:var(--accent-weak);color:var(--accent);margin-right:6px}
+.btn{border:1px solid var(--accent);background:var(--accent);color:#fff;padding:8px 16px;border-radius:8px;cursor:pointer;font-size:15px}
+.btn.ghost{background:transparent;color:var(--accent)}
+.btn.small{padding:4px 10px;font-size:13px}
+.btn:disabled{opacity:.4;cursor:default}
+select{padding:7px 10px;border-radius:8px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:15px}
+label.chk{font-size:14px;margin-right:14px;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* card */
+.ecard{background:var(--card);border:2px solid var(--line);border-radius:10px;padding:18px}
+.ecard .ttl{text-align:center;font-weight:bold;font-size:19px;margin-bottom:6px}
+.ecard .psg{text-indent:1.5em}
+.opening{margin-top:14px;padding:8px 12px;border:1px dashed var(--sub);border-radius:6px}
+.panels{display:grid;grid-template-columns:1fr auto 1fr auto 1fr;gap:6px;align-items:start;margin-top:12px}
+.pn{display:flex;flex-direction:column;gap:6px}
+.pn .frame{aspect-ratio:4/3;border:1.5px solid var(--ink);border-radius:4px;overflow:hidden;background:#fff;display:flex;align-items:center;justify-content:center}
+.pn img{width:100%;height:100%;object-fit:cover}
+.pn .desc{font-size:12.5px;color:#333;padding:8px;line-height:1.5}
+.pn .bub{font-size:14px;font-family:Georgia,serif;background:var(--panel);border:1.5px solid var(--ink);border-radius:14px;padding:4px 10px}
+.arrow{display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:12px;color:var(--sub);padding-top:12%;min-width:52px;text-align:center}
+.arrow b{font-size:22px;color:var(--ink);line-height:1}
+@media (max-width:700px){
+  .panels{grid-template-columns:1fr}
+  .arrow{flex-direction:row;gap:6px;padding:0;min-width:0}
+  .arrow b{transform:rotate(90deg)}
+}
+
+/* exam */
+#examStage{display:none}
+.stage-top{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap}
+.stepname{font-weight:bold;color:var(--accent)}
+.examiner{display:flex;gap:12px;align-items:flex-start;margin:14px 0}
+.avatar{width:46px;height:46px;border-radius:50%;background:var(--accent-weak);color:var(--accent);display:flex;align-items:center;justify-content:center;font-weight:bold;flex:none}
+.say{flex:1;background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:10px 14px;min-height:46px}
+.say.speaking{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-weak)}
+.hint{margin:6px 0 0 58px;font-size:14px;color:var(--good)}
+.timer{margin:14px 0;padding:12px 14px;border-radius:12px;background:var(--panel);border:1px solid var(--line);display:none}
+.timer .lbl{display:flex;justify-content:space-between;font-weight:bold}
+.bar{height:10px;background:var(--line);border-radius:6px;overflow:hidden;margin:8px 0}
+.bar i{display:block;height:100%;background:var(--accent);width:100%;transition:width .2s linear}
+.rec{color:#d0342c;font-weight:bold;font-size:13px}
+.hidden-card{text-align:center;padding:30px;border:2px dashed var(--line);border-radius:10px;color:var(--sub)}
+.yn{display:none;gap:10px;margin-top:10px}
+
+/* study */
+.qa{border-top:1px solid var(--line);padding-top:12px;margin-top:16px}
+.ans{margin-top:8px;padding:10px 12px;border-left:4px solid var(--good);background:var(--panel);border-radius:0 8px 8px 0}
+.ans.blur .txt{filter:blur(6px);cursor:pointer;user-select:none}
+.tip{font-size:14px;color:var(--warn);margin-top:6px}
+.reviewitem{border-bottom:1px solid var(--line);padding:12px 0}
+audio{width:100%;max-width:420px;height:36px}
+</style>
+</head>
+<body>
+<header><div class="hwrap">
+  <h1>英検2級 面接練習</h1>
+  <nav>
+    <button data-tab="guide" class="on">流れとコツ</button>
+    <button data-tab="exam">本番モード</button>
+    <button data-tab="study">学習モード</button>
+  </nav>
+</div></header>
+<main>
+
+<!-- ============ GUIDE ============ -->
+<section class="tab on" id="tab-guide">
+  <div class="box">
+    <b>このアプリの使い方</b>
+    <ol class="muted" style="margin:6px 0 0;padding-left:20px">
+      <li>まずこのページで面接の流れを確認します。</li>
+      <li>「学習モード」で問題と模範解答を聞き、声に出してまねします（音読・シャドーイング）。</li>
+      <li>慣れたら「本番モード」。面接官の音声とタイマーで、本番と同じ流れを通しで練習します。録音して最後に模範解答と聞き比べられます。</li>
+    </ol>
+    <p class="muted" style="margin:8px 0 0">音声ファイル（audio/）がまだ無い場合は、ブラウザの読み上げ機能で代わりに再生します。イラスト（images/）が無い場合は、場面の説明文を表示します。</p>
+  </div>
+
+  <h2>面接の流れ（約7分）</h2>
+  <div class="box">
+  <ol class="flow">
+    <li><b>入室・あいさつ</b><br>ノックして入室し、<span class="en">"Hello."</span> 面接カード（受験者用の用紙）を渡し、指示されたら着席。名前と受験級の確認、<span class="en">"How are you?"</span> などの簡単なあいさつ。</li>
+    <li><b>問題カードを受け取る</b><br>英文（約60語）と3コマのイラストが印刷されたカードを渡されます。</li>
+    <li><b>黙読（20秒）</b> <span class="tag">準備</span><br>英文を声に出さずに読みます。</li>
+    <li><b>音読</b> <span class="tag">配点5</span><br>タイトルから英文を声に出して読みます。</li>
+    <li><b>No.1 英文についての質問</b> <span class="tag">配点5</span><br><span class="en">"According to the passage, how ...?"</span> などと聞かれます。カードを見て答えてOK。</li>
+    <li><b>No.2 イラストの説明</b> <span class="tag">配点5</span><br>20秒の準備のあと、カードに書かれた最初の文から始めて、3コマの話を説明します。</li>
+    <li><b>カードを裏返す</b><br><span class="en">"Please turn over the card and put it down."</span> ここからはカードを見ずに答えます。</li>
+    <li><b>No.3 意見を述べる</b> <span class="tag">配点5</span><br><span class="en">"Some people say that ... What do you think about that?"</span> 賛成・反対と理由。</li>
+    <li><b>No.4 意見を述べる</b> <span class="tag">配点5</span><br><span class="en">"Do you think ...?"</span> にYes/Noで答え、<span class="en">"Why?" / "Why not?"</span> と聞かれたら理由を2文で。</li>
+    <li><b>カードを返して退室</b><br><span class="en">"May I have the card back, please?"</span> → <span class="en">"Here you are."</span> <span class="en">"Thank you. Goodbye."</span></li>
+  </ol>
+  <p class="muted">このほか、入室から退室までの態度（アティチュード：積極性・声の大きさ・反応の速さ）に3点。合計33点です。合格の目安はおおむね6割程度と言われています（正確な基準は英検公式サイトで確認してください）。</p>
+  </div>
+
+  <h2>各問題の答え方テンプレート</h2>
+  <div class="box">
+    <h3>音読</h3>
+    <ul>
+      <li>タイトルも読む。速さより<b>はっきり・区切りよく</b>。</li>
+      <li>意味のかたまり（カンマ、and、by doing so の前など）で軽く区切る。</li>
+      <li>黙読の20秒で、読みにくい単語と「by doing so / in this way」の文を確認しておく（No.1でほぼ必ず聞かれます）。</li>
+    </ul>
+    <h3>No.1（英文の内容）</h3>
+    <ul>
+      <li><span class="en">how</span> で聞かれたら → <span class="en"><b>By ~ing ....</b></span>　（例: By buying home appliances that use less electricity.）</li>
+      <li><span class="en">why</span> で聞かれたら → <span class="en"><b>Because they ....</b></span></li>
+      <li>文中の <span class="en">such ~ / they / it</span> は、<b>前の文の具体的な言葉に言い換える</b>。そのまま読むと減点されやすいです。</li>
+    </ul>
+    <h3>No.2（3コマの説明）</h3>
+    <ul>
+      <li>必ずカードの最初の文から始める。<b>全部過去形</b>で話す。</li>
+      <li>各コマ2文が目安。コマの間の矢印にある語句（<span class="en">That weekend, / A week later,</span> など）を文頭に使う。</li>
+      <li>吹き出しのセリフ → <span class="en">X said to Y, "...."</span></li>
+      <li>人物の動作 → <span class="en">X was ~ing ....</span>（過去進行形）</li>
+      <li>考えている絵（思考の吹き出し） → <span class="en">X was thinking of ~ing .... / X was thinking that ....</span></li>
+    </ul>
+    <h3>No.3（意見）</h3>
+    <ul>
+      <li><span class="en"><b>I agree. / I disagree.</b></span> ＋ 理由を<b>2文</b>。</li>
+      <li>「理由1文＋具体例・補足1文」で十分。<span class="en">Also, ...</span> を使うと2つ目が言いやすい。</li>
+    </ul>
+    <h3>No.4（意見）</h3>
+    <ul>
+      <li>まず <span class="en"><b>Yes. / No.</b></span> だけ答える → <span class="en">"Why?"</span> と聞かれてから理由を2文。</li>
+      <li>自分の本当の意見でなくてOK。<b>理由を言いやすい方</b>を選ぶのがコツ。</li>
+    </ul>
+  </div>
+
+  <h2>困ったときの一言・態度のポイント</h2>
+  <div class="box">
+    <table>
+      <tr><th style="width:45%">場面</th><th>言い方</th></tr>
+      <tr><td>質問が聞き取れなかった</td><td class="en">I'm sorry. Could you say that again, please?</td></tr>
+      <tr><td>少し考えたい</td><td class="en">Well, let me see...</td></tr>
+      <tr><td>言い直したい</td><td class="en">Sorry, I mean ...</td></tr>
+    </table>
+    <ul style="margin-top:12px">
+      <li><b>黙り込むのが一番もったいない。</b>短くても何か言う。</li>
+      <li>面接官の目を見て、大きめの声で。答え終わったら面接官を見て「終わりました」と伝わるように。</li>
+      <li>聞き返し（1回程度）は大きな減点になりにくいので、聞こえなければ遠慮せず聞き返す。</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ============ EXAM ============ -->
+<section class="tab" id="tab-exam">
+  <div id="examSetup" class="box">
+    <b>本番モード</b>
+    <p class="muted" style="margin:4px 0 12px">面接官の音声 → あなたが声に出して答える → タイマー、の順で、入室から退室まで通しで進みます。早く答え終わったら「次へ」で進めます。</p>
+    <div class="row" style="margin-bottom:10px">
+      <select id="examSet"></select>
+    </div>
+    <div class="row" style="margin-bottom:14px">
+      <label class="chk"><input type="checkbox" id="optSub" checked> 面接官の英文を表示</label>
+      <label class="chk"><input type="checkbox" id="optHint" checked> 返答のヒントを表示</label>
+      <label class="chk"><input type="checkbox" id="optRec" checked> 自分の声を録音する</label>
+      <label class="chk"><input type="checkbox" id="optGreet" checked> 入室のあいさつから始める</label>
+    </div>
+    <button class="btn" id="startExam">開始する</button>
+  </div>
+
+  <div id="examStage">
+    <div class="stage-top">
+      <span class="stepname" id="stepName"></span>
+      <button class="btn ghost small" id="stopExam">中止</button>
+    </div>
+    <div class="examiner">
+      <div class="avatar">面</div>
+      <div class="say en" id="sayBox"></div>
+    </div>
+    <div class="hint" id="hintBox"></div>
+    <div class="timer" id="timerBox">
+      <div class="lbl"><span id="timerLbl"></span><span id="timerNum"></span></div>
+      <div class="bar"><i id="timerBar"></i></div>
+      <div class="row" style="justify-content:space-between">
+        <span class="rec" id="recMark"></span>
+        <button class="btn small" id="nextBtn">次へ</button>
+      </div>
+      <div class="yn" id="ynBox">
+        <button class="btn" data-yn="yes">Yes と答えた</button>
+        <button class="btn" data-yn="no">No と答えた</button>
+      </div>
+    </div>
+    <div id="examCard" style="margin-top:14px"></div>
+  </div>
+
+  <div id="examReview" style="display:none"></div>
+</section>
+
+<!-- ============ STUDY ============ -->
+<section class="tab" id="tab-study">
+  <div class="box">
+    <div class="row">
+      <select id="studySet"></select>
+      <label class="chk">速さ
+        <select id="studyRate">
+          <option value="0.8">0.8倍</option>
+          <option value="0.9">0.9倍</option>
+          <option value="1" selected>1.0倍</option>
+          <option value="1.1">1.1倍</option>
+        </select>
+      </label>
+      <label class="chk"><input type="checkbox" id="optBlur" checked> 模範解答をぼかす（タップで表示）</label>
+    </div>
+    <p class="muted" style="margin:8px 0 0">おすすめ：①質問を聞いて自分で答える → ②模範解答を表示して聞く → ③模範解答を見ながら一緒に言う（オーバーラッピング）→ ④見ないで追いかけて言う（シャドーイング）</p>
+  </div>
+  <div id="studyBody"></div>
+</section>
+</main>
+
+<script>
+const DATA = {"voices": {"examiner": "en-US-GuyNeural", "model": "en-US-JennyNeural"}, "common": [{"id": "c01_card", "text": "Hello. May I have your card, please?", "reply": "Hello. Here you are.", "time": 5}, {"id": "c02_seat", "text": "Thank you. Please have a seat.", "reply": "Thank you.", "time": 4}, {"id": "c03_name", "text": "May I have your name, please?", "reply": "My name is (あなたの名前).", "time": 5}, {"id": "c04_grade", "text": "All right. This is the Grade 2 test. OK?", "reply": "Yes.", "time": 4}, {"id": "c05_how", "text": "How are you today?", "reply": "I'm fine, thank you. (And you?)", "time": 5}, {"id": "c06_start", "text": "All right. Let's start the test. This is your card.", "reply": "Thank you.", "time": 3}, {"id": "c07_silent", "text": "First, please read the passage silently for 20 seconds."}, {"id": "c08_aloud", "text": "All right. Now, please read it aloud."}, {"id": "c09_four", "text": "Now, I'm going to ask you four questions."}, {"id": "c10_no2", "text": "No. 2. Now, please look at the pictures and describe the situation. You have 20 seconds to prepare. Your story should begin with the sentence on the card."}, {"id": "c11_begin", "text": "All right. Please begin."}, {"id": "c12_turn", "text": "Now, please turn over the card and put it down."}, {"id": "c13_why", "text": "Why?"}, {"id": "c14_whynot", "text": "Why not?"}, {"id": "c15_back", "text": "All right. That's all. May I have the card back, please?", "reply": "Here you are.", "time": 4}, {"id": "c16_go", "text": "Thank you. You may go now.", "reply": "Thank you. Goodbye.", "time": 4}], "sets": [{"id": "set1", "theme": "環境・省エネ", "title": "Saving Energy at Home", "passage": "These days, many people are worried about the environment. Because of this, some companies are selling home appliances that use less electricity. Many families buy such appliances, and by doing so they can save energy and reduce their electricity bills. People are also trying to find other ways to protect the environment in their daily lives.", "q1": "No. 1. According to the passage, how can many families save energy and reduce their electricity bills?", "a1": "By buying home appliances that use less electricity.", "a1_tip": "「by doing so」の直前（buy such appliances）が答え。such appliances を前の文の具体的な名詞（home appliances that use less electricity）に言い換えるのがポイント。", "opening": "One day, Mr. and Mrs. Sato were talking in their living room.", "panels": [{"label": "", "jp": "リビング。佐藤さんの奥さんが電気料金の請求書を見せながら夫に話しかけている。", "bubble": "We should save electricity.", "prompt": "A Japanese middle-aged couple sitting in a living room. The wife is holding up an electricity bill and talking to her husband, who looks surprised. A speech bubble shape near the wife (leave the bubble empty)."}, {"label": "That weekend", "jp": "家電量販店。店員が省エネエアコンについて夫婦に説明している。", "bubble": "", "prompt": "The same Japanese couple in an electronics store. A store clerk in a uniform is pointing at an air conditioner on display and explaining it to the couple. A small energy-saving leaf symbol on the air conditioner. No speech bubbles."}, {"label": "A month later", "jp": "自宅。夫が誰もいない息子の部屋で電気とテレビがつけっぱなしなのを見つけ、「消すべきだ」と考えている（思考の吹き出し：電気を消している息子）。", "bubble": "", "prompt": "The husband standing at the door of his teenage son's empty room. The ceiling light and the TV are on, but nobody is in the room. A thought bubble above the husband shows a boy switching off the light. No speech bubbles."}], "a2": "One day, Mr. and Mrs. Sato were talking in their living room. Mrs. Sato showed her husband the electricity bill and said to him, \"We should save electricity.\" That weekend, they went to an electronics store. A store clerk was explaining an energy-saving air conditioner to them. A month later, Mr. Sato found that the light and the TV were on in his son's room. He was thinking that his son should turn them off.", "q3": "No. 3. Some people say that people should use public transportation more instead of cars. What do you think about that?", "a3_agree": "I agree. Public transportation produces less carbon dioxide per person than cars. Also, if more people use trains and buses, there will be fewer traffic jams in big cities.", "a3_disagree": "I disagree. In many rural areas, there are not enough buses or trains. People who live there need cars for shopping and going to work.", "q4": "No. 4. These days, many people buy secondhand clothes online. Do you think more people will buy used items in the future?", "a4_yes": "Yes. Used items are much cheaper than new ones. Also, buying used items is good for the environment because it reduces waste.", "a4_no": "No. Many people prefer new things because they are clean. Also, it is sometimes difficult to check the quality of used items online."}, {"id": "set2", "theme": "教育・オンライン学習", "title": "Learning Online", "passage": "Today, many schools and companies offer online lessons. Students can take these lessons at home at any time. However, some students find it hard to keep studying alone. Some online schools now have teachers check students' progress every week, and in this way they help students continue studying. Online learning will probably become more common in the future.", "q1": "No. 1. According to the passage, how do some online schools help students continue studying?", "a1": "By having teachers check students' progress every week.", "a1_tip": "「in this way」も「by doing so」と同じ合図。直前の内容を By ~ing の形にして答える。have → having に変えるのを忘れずに。", "opening": "One day, Ken was talking with his mother in the living room.", "panels": [{"label": "", "jp": "リビング。ケンがタブレットでオンライン英会話の広告を母親に見せている。", "bubble": "I want to take this online lesson.", "prompt": "A Japanese high school boy in a living room showing a tablet to his mother. The tablet screen shows an advertisement with a picture of a teacher and a laptop (no readable text). A speech bubble shape near the boy (leave it empty)."}, {"label": "A week later", "jp": "ケンの部屋。ケンがノートパソコンでオンラインレッスンを受けている。母親がおやつを運んできている。", "bubble": "", "prompt": "The boy sitting at a desk in his room, wearing a headset and taking an online lesson on a laptop. A foreign teacher is on the laptop screen. His mother is coming into the room carrying a plate of snacks and a cup. No speech bubbles."}, {"label": "That evening", "jp": "リビング。ケンの妹がゲームをするためにパソコンを使いたがっている。ケンは「授業の復習に使いたい」と考えている（思考の吹き出し：ノートとパソコンで復習するケン）。", "bubble": "", "prompt": "In the living room, the boy's younger sister is holding a game controller and pulling at the laptop, wanting to use it. The boy looks troubled. A thought bubble above the boy shows him reviewing notes in front of the laptop. No speech bubbles."}], "a2": "One day, Ken was talking with his mother in the living room. He showed her an advertisement for online English lessons and said, \"I want to take this online lesson.\" A week later, Ken was taking an online lesson in his room. His mother was bringing him some snacks. That evening, Ken's sister wanted to use the computer to play games. Ken was thinking that he wanted to use it to review the lesson.", "q3": "No. 3. Some people say that children today spend too much time using smartphones. What do you think about that?", "a3_agree": "I agree. Many children use smartphones for many hours every day. This can be bad for their eyes and their sleep.", "a3_disagree": "I disagree. Children can use smartphones to study and look up information. Also, they can contact their parents easily in an emergency.", "q4": "No. 4. Today, some university students take all their classes online. Do you think online classes are better than classes at school?", "a4_yes": "Yes. Students do not need to spend time and money going to school. Also, they can watch the lessons again as many times as they want.", "a4_no": "No. Students cannot talk with their classmates and teachers face to face. It is also difficult to concentrate when studying alone at home."}, {"id": "set3", "theme": "地域社会・観光", "title": "Volunteer Guides", "passage": "Japan is visited by many foreign tourists every year. However, some of them have trouble finding information in English. Now, some local people work as volunteer guides. They show tourists around their towns, and by doing so they help visitors enjoy local culture. Such activities are also good for local communities.", "q1": "No. 1. According to the passage, how do some local people help visitors enjoy local culture?", "a1": "By showing tourists around their towns.", "a1_tip": "They show ... の They は「some local people」。主語は答えに含めず、By ~ing から言い始めればOK。", "opening": "One day, Mr. and Mrs. Tanaka were reading a city newsletter at home.", "panels": [{"label": "", "jp": "自宅。田中夫妻が市の広報誌を読んでいる。ボランティアガイド募集の記事（外国人観光客と案内する人の絵）を奥さんが指さしている。", "bubble": "Why don't we join this?", "prompt": "A Japanese couple in their sixties sitting at a dining table at home, reading a city newsletter together. The page shows a picture of a guide with foreign tourists (no readable text). The wife is pointing at it. A speech bubble shape near the wife (leave it empty)."}, {"label": "Two weeks later", "jp": "お寺。田中夫妻が外国人観光客のグループを案内している。夫が観光客の写真を撮ってあげている。", "bubble": "", "prompt": "Exactly two Japanese people in their sixties, a husband and a wife, guiding a small group of four foreign tourists in front of a Japanese temple. The husband is holding a camera to his face, taking a photo of the smiling tourists. The wife is standing beside him holding a small flag. No speech bubbles. No thought bubbles."}, {"label": "After the tour", "jp": "雨が降り始める。傘を持っていない観光客がいる。奥さんが「自分の傘を貸してあげよう」と考えている（思考の吹き出し：傘を手渡す自分）。", "bubble": "", "prompt": "It has started raining. One foreign tourist has no umbrella and is covering her head with her hands. The Japanese wife is holding a folded umbrella. A thought bubble above the wife shows her handing the umbrella to the tourist. No speech bubbles."}], "a2": "One day, Mr. and Mrs. Tanaka were reading a city newsletter at home. Mrs. Tanaka saw an article about volunteer guides and said to her husband, \"Why don't we join this?\" Two weeks later, they were showing some foreign tourists around a temple. Mr. Tanaka was taking a picture of the tourists. After the tour, it started to rain. Mrs. Tanaka was thinking of lending her umbrella to one of the tourists.", "q3": "No. 3. Some people say that Japan should accept more foreign tourists. What do you think about that?", "a3_agree": "I agree. Foreign tourists spend a lot of money in Japan, so it is good for the economy. Also, Japanese people can learn about other cultures.", "a3_disagree": "I disagree. Some popular places are already too crowded. Too many tourists can cause problems for local people, such as noise and garbage.", "q4": "No. 4. Today, many people take part in volunteer activities. Do you think students should do volunteer work?", "a4_yes": "Yes. Students can learn many things that they cannot learn at school. Also, they can meet people of different ages through volunteer work.", "a4_no": "No. Students are already very busy with studying and club activities. Volunteer work should be something people choose to do by themselves."}, {"id": "set4", "theme": "働き方", "title": "Working from Home", "passage": "Recently, more companies have allowed their workers to work from home. Workers do not have to take crowded trains every morning. However, it can be difficult for them to communicate with their coworkers. Some companies hold short online meetings every morning, and by doing so they keep good communication among workers. This style of working is likely to continue.", "q1": "No. 1. According to the passage, how do some companies keep good communication among workers?", "a1": "By holding short online meetings every morning.", "a1_tip": "hold → holding。「every morning」まで含めると正確な答えになる。", "opening": "One day, Mr. Kato was talking with his boss at the office.", "panels": [{"label": "", "jp": "オフィス。上司が加藤さんに話しかけている。", "bubble": "You can work from home starting next week.", "prompt": "A Japanese office. A middle-aged male boss is talking to a younger office worker, Mr. Kato, who is standing at his desk. A speech bubble shape near the boss (leave it empty)."}, {"label": "The next week", "jp": "自宅。加藤さんがパソコンでオンライン会議をしている。奥さんが仕事に出かけようとしている（手を振っている）。", "bubble": "", "prompt": "Inside a Japanese home. Only ONE man, Mr. Kato (about 30, short hair, white shirt), is sitting alone at a dining table, having an online meeting on his laptop; the laptop screen shows several small faces. In the background, at the front door, his wife in office clothes with a handbag is leaving for work and waving goodbye. Exactly two people in the picture: Mr. Kato and his wife. No speech bubbles."}, {"label": "In the afternoon", "jp": "自宅。帰宅した子どもたちが加藤さんのそばで騒いで遊んでいる。加藤さんは「カフェで仕事をしよう」と考えている（思考の吹き出し：カフェでパソコン作業する自分）。", "bubble": "", "prompt": "Inside a Japanese home in the afternoon. Only ONE man, Mr. Kato (about 30, short hair, white shirt), is sitting alone at a table with his laptop, holding his head with both hands, looking stressed. Two small children (a boy and a girl) are running and shouting noisily around him with toys. A thought bubble above Mr. Kato shows him working quietly on a laptop at a small table in a cafe, with a coffee cup and a cafe counter in the background. Exactly three people in the main scene: Mr. Kato and two children."}], "a2": "One day, Mr. Kato was talking with his boss at the office. His boss said to him, \"You can work from home starting next week.\" The next week, Mr. Kato was having an online meeting at home. His wife was leaving for work. In the afternoon, his children were playing noisily near him. Mr. Kato was thinking of working at a cafe.", "q3": "No. 3. Some people say that people in Japan work too much. What do you think about that?", "a3_agree": "I agree. Many workers in Japan work overtime almost every day. They do not have enough time to spend with their families.", "a3_disagree": "I disagree. These days, many companies are trying to reduce overtime work. More workers can now take paid holidays.", "q4": "No. 4. These days, some companies let workers choose what time they start work. Do you think more companies will do this in the future?", "a4_yes": "Yes. Workers can avoid crowded trains in the morning. Also, it is easier for parents to take their children to school.", "a4_no": "No. It is difficult for workers to have meetings if they start at different times. Also, some jobs, such as working in shops, need fixed hours."}, {"id": "set5", "theme": "高齢化社会", "title": "Delivery Services for Elderly People", "passage": "In Japan, the number of elderly people is increasing. Some of them live far from supermarkets and find it difficult to go shopping. Now, some supermarkets offer delivery services that people can use by phone. Elderly people use such services, and by doing so they can get food without leaving their homes. These services are becoming more popular.", "q1": "No. 1. According to the passage, how can elderly people get food without leaving their homes?", "a1": "By using delivery services that they can use by phone.", "a1_tip": "such services ＝ 前の文の delivery services that people can use by phone。「By using such services.」だけでは減点されやすいので、必ず具体的に言い換える。", "opening": "One day, Yuka was visiting her grandmother.", "panels": [{"label": "", "jp": "祖母の家。重そうな買い物袋の横で、祖母がユカに話しかけている。", "bubble": "It's hard for me to carry heavy bags.", "prompt": "A Japanese young woman, Yuka, visiting her elderly grandmother's house. Next to the grandmother are two heavy shopping bags full of vegetables and bottles. The grandmother is talking to Yuka and rubbing her back. A speech bubble shape near the grandmother (leave it empty)."}, {"label": "A few days later", "jp": "祖母の家。ユカがスーパーのチラシを見ながら、祖母が電話で注文するのを手伝っている。", "bubble": "", "prompt": "Inside a Japanese tatami room. Exactly two people: an elderly grandmother and her granddaughter Yuka (about 25, short black hair). They are sitting side by side at a low table. The grandmother is talking on a landline telephone. Yuka is pointing at items on a supermarket flyer spread on the table to help her order food. The grandmother appears only once. No speech bubbles."}, {"label": "The next week", "jp": "祖母の家の玄関。配達員が段ボール箱を届けている。祖母は「ユカに電話してお礼を言おう」と考えている（思考の吹き出し：電話している自分とユカ）。", "bubble": "", "prompt": "At the front door of the grandmother's house, a delivery man is handing over cardboard boxes of groceries. The grandmother is smiling. A thought bubble above the grandmother shows her talking on the phone with Yuka, both smiling. No speech bubbles."}], "a2": "One day, Yuka was visiting her grandmother. Her grandmother said to her, \"It's hard for me to carry heavy bags.\" A few days later, Yuka was helping her grandmother order food from a supermarket by phone. The next week, a delivery man brought some boxes to her grandmother's house. Her grandmother was thinking of calling Yuka to thank her.", "q3": "No. 3. Some people say that elderly people should stop driving at a certain age. What do you think about that?", "a3_agree": "I agree. As people get older, their reactions become slower. This can cause serious car accidents.", "a3_disagree": "I disagree. Some elderly people are still good drivers. Also, people in the countryside need cars to go shopping and to the hospital.", "q4": "No. 4. Today, many stores use self-checkout machines. Do you think stores should use more machines instead of workers?", "a4_yes": "Yes. Many stores have trouble finding enough workers. Machines can work for long hours, so stores can save money.", "a4_no": "No. Some people, especially elderly people, find these machines difficult to use. Also, many workers may lose their jobs."}, {"id": "set6", "theme": "健康・運動", "title": "Apps for Better Health", "passage": "Doctors say that walking regularly is good for our health. Nowadays, some companies have developed smartphone apps that record how many steps people walk each day. Users can check their records easily, and by doing so they can stay motivated to exercise. Such apps are becoming popular among people of all ages.", "q1": "No. 1. According to the passage, how can users stay motivated to exercise?", "a1": "By checking their records of how many steps they walk each day.", "a1_tip": "their records は「アプリが記録した、1日に何歩歩いたかの記録」。records だけで終わらせず、of how many steps ... まで具体的に言うと確実。", "opening": "One day, Mr. and Mrs. Ito were talking in their living room.", "panels": [{"label": "", "jp": "リビング。体重計に乗って困った顔の夫に、妻が話しかけている。", "bubble": "You should walk more.", "prompt": "A Japanese man in his fifties standing on a bathroom scale in a living room, looking troubled. His wife is standing next to him and talking to him with a smile. A speech bubble shape near the wife (leave it empty)."}, {"label": "The next morning", "jp": "公園。伊藤さんがウォーキングをしながらスマートフォンで歩数を確認している。", "bubble": "", "prompt": "The same man walking in a park in the morning in sportswear, looking at the screen of his smartphone. Trees and a path in the background. A woman walking a dog passes by. No speech bubbles."}, {"label": "A month later", "jp": "自宅。伊藤さんのズボンがぶかぶかになっている。伊藤さんは「新しいズボンを買おう」と考えている（思考の吹き出し：洋服店でズボンを選ぶ自分）。", "bubble": "", "prompt": "Inside the same living room at home (not a store). Only ONE man, Mr. Ito, now slimmer, is standing and holding out the waist of his pants with both hands because the pants are much too big for him. He is smiling. A thought bubble above his head shows him choosing new pants in a clothing store. Mr. Ito appears only once in the main scene; no other people in the main scene."}], "a2": "One day, Mr. and Mrs. Ito were talking in their living room. Mr. Ito was standing on a scale, and his wife said to him, \"You should walk more.\" The next morning, Mr. Ito was walking in a park. He was checking the number of steps on his smartphone. A month later, Mr. Ito's pants were too big for him. He was thinking of buying new ones.", "q3": "No. 3. Some people say that people today do not get enough exercise. What do you think about that?", "a3_agree": "I agree. Many people use cars and trains to go everywhere. Also, they spend a lot of time sitting in front of computers.", "a3_disagree": "I disagree. These days, many people go to gyms or go jogging. More people are interested in staying healthy.", "q4": "No. 4. Today, some companies give their workers time to exercise during work hours. Do you think more companies should do this?", "a4_yes": "Yes. Workers who exercise can stay healthy and work better. Also, exercise can help them reduce stress.", "a4_no": "No. Workers should use their free time for exercise. Also, some companies are too busy to give workers extra time."}, {"id": "set7", "theme": "食品ロス", "title": "Reducing Food Waste", "passage": "In Japan, a large amount of food is thrown away every year, although much of it could still be eaten. To solve this problem, some supermarkets sell food at lower prices when it is close to its expiration date. Customers buy such food, and by doing so they can save money and help reduce food waste.", "q1": "No. 1. According to the passage, how can customers save money and help reduce food waste?", "a1": "By buying food that is sold at lower prices when it is close to its expiration date.", "a1_tip": "such food をそのまま言わず、「期限が近くて安く売られている食品」と具体的に。少し長くても、文の形を崩さず最後まで言えばOK。", "opening": "One day, Mrs. Kimura and her daughter were cleaning the refrigerator.", "panels": [{"label": "", "jp": "台所。冷蔵庫から古くなった野菜が出てきた。娘が母親に話しかけている。", "bubble": "We should buy only what we need.", "prompt": "A Japanese mother and her teenage daughter in a kitchen, cleaning out an open refrigerator. The mother is holding some old, wilted vegetables over a trash can. The daughter is talking to her. A speech bubble shape near the daughter (leave it empty)."}, {"label": "That weekend", "jp": "スーパー。娘が買い物リストを確認し、木村さんは値引きシールの付いた食品をかごに入れている。", "bubble": "", "prompt": "The mother and daughter shopping in a supermarket. The daughter is checking a shopping list on a small piece of paper. The mother is putting a food package with a round discount sticker (no readable text) into a shopping basket. No speech bubbles."}, {"label": "That evening", "jp": "自宅。夫が大量のパンを抱えて帰宅。木村さんは「全部は食べきれない」と考えている（思考の吹き出し：食べ残されたパンの山）。", "bubble": "", "prompt": "At the front door of their home in the evening, the father has just come home carrying several big bags full of bread. The mother looks surprised. A thought bubble above the mother shows a pile of leftover bread on a table. No speech bubbles."}], "a2": "One day, Mrs. Kimura and her daughter were cleaning the refrigerator. They found some old vegetables, and her daughter said to her, \"We should buy only what we need.\" That weekend, they were shopping at a supermarket. Her daughter was checking a shopping list, and Mrs. Kimura was choosing some food at a discount. That evening, Mr. Kimura came home with a lot of bread. Mrs. Kimura was thinking that they could not eat all of it.", "q3": "No. 3. Some people say that restaurants should serve smaller portions to reduce food waste. What do you think about that?", "a3_agree": "I agree. Many customers cannot finish large meals at restaurants. If portions are smaller, less food will be thrown away.", "a3_disagree": "I disagree. Some customers want to eat a lot. Restaurants can let customers take leftover food home instead.", "q4": "No. 4. These days, some people use apps to buy food that stores cannot sell. Do you think more people will use such apps in the future?", "a4_yes": "Yes. People can buy food at low prices with these apps. Also, more and more people want to help the environment.", "a4_no": "No. Many people think that checking the apps takes too much time. Also, they may not be able to get the food they want."}, {"id": "set8", "theme": "防災", "title": "Preparing for Disasters", "passage": "Japan has many natural disasters, such as earthquakes and typhoons. It is important for people to be ready for them. Some local governments hold disaster drills for residents. People take part in these drills, and by doing so they can learn what to do in an emergency. Also, many families now keep emergency supplies at home.", "q1": "No. 1. According to the passage, how can people learn what to do in an emergency?", "a1": "By taking part in disaster drills held by local governments.", "a1_tip": "these drills ＝ 前の文の「地方自治体が行う防災訓練」。take → taking。held by ～（～によって行われる）を使うとスッキリ言える。", "opening": "One day, Mr. and Mrs. Mori were watching the news on TV.", "panels": [{"label": "", "jp": "リビング。テレビで台風のニュース（天気図）が流れている。妻が夫に話しかけている。", "bubble": "We should prepare an emergency bag.", "prompt": "A Japanese couple in their forties sitting on a sofa watching TV. The TV screen shows a weather map with a large typhoon symbol (no readable text). The wife is talking to her husband. A speech bubble shape near the wife (leave it empty)."}, {"label": "The next day", "jp": "ホームセンター。夫が水のペットボトルの箱を運び、妻が懐中電灯を選んでいる。", "bubble": "", "prompt": "The same couple in a home improvement store. The husband is carrying a cardboard box of water bottles. The wife is choosing a flashlight from a shelf. No speech bubbles."}, {"label": "That night", "jp": "台風で停電した暗い部屋。夫が非常用バッグの中から懐中電灯を探している。", "bubble": "", "prompt": "A dark living room at night during a storm, with rain and wind visible through the window. The power is out. The husband is kneeling and searching inside an emergency backpack for a flashlight. The wife is holding a candle. No speech bubbles."}], "a2": "One day, Mr. and Mrs. Mori were watching the news on TV. There was news about a typhoon, and Mrs. Mori said to her husband, \"We should prepare an emergency bag.\" The next day, they went to a store. Mr. Mori was carrying a box of water, and Mrs. Mori was choosing a flashlight. That night, the electricity went off because of the typhoon. Mr. Mori was looking for the flashlight in the emergency bag.", "q3": "No. 3. Some people say that schools should teach students more about disasters. What do you think about that?", "a3_agree": "I agree. Students need to know how to protect themselves in an emergency. Also, they can teach their families what they learned.", "a3_disagree": "I disagree. Students already have disaster drills at school. Families should talk about disasters at home instead.", "q4": "No. 4. Today, some people use smartphone apps to get information during disasters. Do you think these apps are helpful for everyone?", "a4_yes": "Yes. People can get the latest information quickly with these apps. Also, they can easily find the nearest evacuation center.", "a4_no": "No. Some elderly people do not know how to use smartphones. Also, the Internet may not work during a big disaster."}, {"id": "set9", "theme": "キャッシュレス", "title": "Cashless Payments", "passage": "In the past, most people in Japan paid for things with cash. Today, however, more and more people use smartphones to pay at stores. Some stores give points to customers who pay with smartphones, and in this way they encourage people to use cashless payments. However, some people still worry about the safety of their personal information.", "q1": "No. 1. According to the passage, how do some stores encourage people to use cashless payments?", "a1": "By giving points to customers who pay with smartphones.", "a1_tip": "合図は in this way。直前の give points to customers who pay with smartphones を giving に変えるだけ。", "opening": "One day, Takuya and his grandfather were shopping at a supermarket.", "panels": [{"label": "", "jp": "スーパーのレジ。祖父が小銭を数えるのに手間取っていて、後ろに列ができている。タクヤが祖父に話しかけている。", "bubble": "You can pay with a smartphone.", "prompt": "A supermarket checkout counter. An elderly Japanese man is slowly counting coins from his wallet. Several customers are waiting in line behind him. His teenage grandson is talking to him. A speech bubble shape near the grandson (leave it empty)."}, {"label": "That evening", "jp": "自宅。タクヤが祖父にスマートフォンの支払いアプリの使い方を教えている。祖母は夕食を作っている。", "bubble": "", "prompt": "At home in the evening, the grandson is sitting next to his grandfather and showing him how to use a payment app on a smartphone. In the background, the grandmother is cooking dinner in the kitchen. No speech bubbles."}, {"label": "A few days later", "jp": "小さな商店。祖父がスマートフォンで払おうとしたが、店には「現金のみ」の絵の看板（お札と硬貨の絵）がある。祖父は困っている。", "bubble": "", "prompt": "An elderly man at the counter of a small traditional shop, holding out his smartphone to pay. The shopkeeper is pointing at a sign on the wall that shows only a picture of bills and coins (no readable text). The elderly man looks troubled. No speech bubbles."}], "a2": "One day, Takuya and his grandfather were shopping at a supermarket. His grandfather was taking a long time to pay with coins, so Takuya said to him, \"You can pay with a smartphone.\" That evening, Takuya was showing his grandfather how to use a payment app. His grandmother was cooking dinner. A few days later, Takuya's grandfather tried to pay with his smartphone at a small shop. However, the shop accepted only cash.", "q3": "No. 3. Some people say that people will not use cash at all in the future. What do you think about that?", "a3_agree": "I agree. Paying with smartphones is faster and easier than paying with cash. More and more stores are accepting cashless payments.", "a3_disagree": "I disagree. Some people do not have smartphones or credit cards. Also, cash is useful when there is a power failure.", "q4": "No. 4. These days, many children have their own smartphones. Do you think parents should let young children use cashless payments?", "a4_yes": "Yes. Children do not need to carry cash, so it is safer. Also, parents can easily check how their children spend money.", "a4_no": "No. It is hard for young children to understand the value of money without using cash. They may spend too much money."}, {"id": "set10", "theme": "交通・まちづくり", "title": "Bicycle-Sharing Services", "passage": "Bicycles are a popular way to get around in many cities because they are cheap and good for the environment. Recently, some cities have introduced bicycle-sharing services. People can rent bicycles at many places around the city, and by doing so they can travel easily without owning one. However, some riders do not follow traffic rules.", "q1": "No. 1. According to the passage, how can people travel easily without owning a bicycle?", "a1": "By renting bicycles at many places around the city.", "a1_tip": "質問の one は a bicycle のこと。答えは by doing so の直前 rent bicycles at many places around the city を renting にする。", "opening": "One day, Emi and her friend were waiting for a bus.", "panels": [{"label": "", "jp": "バス停に長い行列。近くのシェアサイクル置き場を指さして、友人がエミに話しかけている。", "bubble": "Let's use those bicycles.", "prompt": "A long line of people waiting at a bus stop in a Japanese city. Two young women are at the end of the line. One of them is pointing at a row of rental bicycles parked nearby and talking to the other. A speech bubble shape near the pointing woman (leave it empty)."}, {"label": "A few minutes later", "jp": "川沿いの道。エミが自転車に乗っている。友人は自転車を止めて桜の写真を撮っている。", "bubble": "", "prompt": "A path along a river with cherry blossom trees in a Japanese city. Exactly two young women, each riding her own rental bicycle (one person per bicycle) along the riverside path, away from the bicycle parking area. One woman wearing a helmet is riding. The other woman has stopped her bicycle and is taking a picture of the cherry blossoms with her smartphone. Exactly two people in the picture. No speech bubbles."}, {"label": "At the station", "jp": "駅前のシェアサイクル置き場が満車で返せない。エミは「別の返却場所を探そう」と考えている（思考の吹き出し：地図アプリで別の置き場を探す自分）。", "bubble": "", "prompt": "In front of a Japanese train station. A bicycle-sharing parking area is completely full of bicycles with no empty space. Exactly two young women are standing next to their own rental bicycles, looking troubled. A thought bubble above one woman shows her looking at a map on her smartphone to find another parking place. Exactly two people in the main scene."}], "a2": "One day, Emi and her friend were waiting for a bus. There were many people at the bus stop, so her friend said to her, \"Let's use those bicycles.\" A few minutes later, they were riding bicycles along a river. Her friend stopped to take a picture of the cherry blossoms. When they arrived at the station, there was no space to return the bicycles. Emi was thinking of looking for another place to return them.", "q3": "No. 3. Some people say that cities should make more bicycle lanes. What do you think about that?", "a3_agree": "I agree. Riding bicycles on busy roads is dangerous. Bicycle lanes can help reduce accidents between cars and bicycles.", "a3_disagree": "I disagree. Many roads in Japan are too narrow for bicycle lanes. Cities should spend money on other things, such as public transportation.", "q4": "No. 4. Today, some people ride bicycles to work. Do you think more people will do so in the future?", "a4_yes": "Yes. Riding a bicycle is good exercise. Also, people do not need to take crowded trains.", "a4_no": "No. Riding a bicycle is hard on rainy or very hot days. Also, many people live too far from their offices."}]};
+const COMMON = Object.fromEntries(DATA.common.map(c => [c.id, c]));
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+
+/* ---------- tabs ---------- */
+document.querySelectorAll('nav button').forEach(b => b.onclick = () => {
+  document.querySelectorAll('nav button').forEach(x => x.classList.toggle('on', x === b));
+  document.querySelectorAll('section.tab').forEach(s => s.classList.toggle('on', s.id === 'tab-' + b.dataset.tab));
+  stopAudio();
+});
+
+/* ---------- audio (mp3, fallback: speechSynthesis) ---------- */
+let curAudio = null, playRate = 1;
+function stopAudio(){
+  if (curAudio){ curAudio.pause(); curAudio = null; }
+  if (window.speechSynthesis) speechSynthesis.cancel();
+}
+function pickVoice(role){
+  const vs = (speechSynthesis.getVoices() || []).filter(v => /^en[-_]US/i.test(v.lang));
+  if (!vs.length) return null;
+  const male = vs.find(v => /male|guy|david|alex|daniel/i.test(v.name) && !/female/i.test(v.name));
+  const female = vs.find(v => /female|jenny|aria|samantha|zira/i.test(v.name));
+  return role === 'examiner' ? (male || vs[0]) : (female || vs[vs.length - 1]);
+}
+function speak(text, role, rate){
+  return new Promise(res => {
+    if (!window.speechSynthesis){ res(); return; }
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = 'en-US'; u.rate = 0.92 * rate;
+    const v = pickVoice(role); if (v) u.voice = v;
+    let ok = false; const fin = () => { if (!ok){ ok = true; res(); } };
+    u.onend = u.onerror = fin;
+    setTimeout(fin, (text.split(/\s+/).length * 0.6 / rate + 3) * 1000); // 読み上げが使えない環境でも止まらないように
+    speechSynthesis.speak(u);
+  });
+}
+function play(src, text, role = 'examiner', rate = 1){
+  stopAudio();
+  return new Promise(res => {
+    const a = new Audio(src);
+    curAudio = a;
+    let done = false;
+    const finish = () => { if (!done){ done = true; res(); } };
+    a.playbackRate = rate;
+    a.onended = finish;
+    a.onerror = () => { if (curAudio === a){ curAudio = null; speak(text, role, rate).then(finish); } else finish(); };
+    a.onpause = () => { if (!a.ended && curAudio !== a) finish(); };
+    a.play().catch(() => { if (!done && curAudio === a){ curAudio = null; speak(text, role, rate).then(finish); } });
+  });
+}
+const commonSrc = id => `audio/common/${id}.mp3`;
+const setSrc = (set, k) => `audio/${set.id}/${k}.mp3`;
+
+/* ---------- card rendering ---------- */
+function cardHTML(s, {showPassage = true} = {}){
+  const panels = s.panels.map((p, i) => {
+    const img = `images/${s.id}_${i + 1}.jpg`;
+    const arrow = i ? `<div class="arrow"><span>${esc(p.label)}</span><b>&rarr;</b></div>` : '';
+    return arrow + `<div class="pn">
+      <div class="frame"><img src="${img}" alt="" data-desc="${esc(p.jp)}" onerror="if(!this.dataset.png){this.dataset.png=1;this.src=this.src.replace(/\.jpg$/,'.png');return;}this.replaceWith(Object.assign(document.createElement('div'),{className:'desc',textContent:'（イラスト未作成）'+this.dataset.desc}))"></div>
+      ${p.bubble ? `<div class="bub">&ldquo;${esc(p.bubble)}&rdquo;</div>` : ''}
+    </div>`;
+  }).join('');
+  return `<div class="ecard">
+    ${showPassage ? `<div class="ttl en">${esc(s.title)}</div><div class="psg en">${esc(s.passage)}</div>` : ''}
+    <div class="muted" style="margin-top:14px">Your story should begin with this sentence:</div>
+    <div class="opening en">${esc(s.opening)}</div>
+    <div class="panels">${panels}</div>
+  </div>`;
+}
+
+/* ---------- selects ---------- */
+for (const sel of [$('#examSet'), $('#studySet')]){
+  sel.innerHTML = DATA.sets.map((s, i) => `<option value="${i}">問題${i + 1}：${esc(s.title)}（${esc(s.theme)}）</option>`).join('');
+}
+
+/* ---------- STUDY ---------- */
+function renderStudy(){
+  const s = DATA.sets[+$('#studySet').value];
+  const blur = $('#optBlur').checked ? ' blur' : '';
+  const pbtn = (src, text, role, label) =>
+    `<button class="btn ghost small" data-src="${src}" data-role="${role}" data-text="${esc(text)}">▶ ${label}</button>`;
+  const ans = (src, text, extra = '') => `<div class="ans${blur}">
+      <div class="row" style="margin-bottom:4px">${pbtn(src, text, 'model', '模範解答')}${extra}</div>
+      <div class="txt en">${esc(text)}</div></div>`;
+  $('#studyBody').innerHTML = `
+  <div class="box">
+    <h3 style="margin-top:0">問題カード</h3>
+    ${cardHTML(s)}
+    <div class="qa">
+      <b>音読</b> <span class="muted">（まず自分で読む → 手本を聞く → 手本と一緒に読む）</span>
+      <div class="row" style="margin-top:6px">${pbtn(setSrc(s, 'passage'), s.title + '. ' + s.passage, 'model', '音読の手本')}</div>
+    </div>
+    <div class="qa">
+      <b>No.1</b>
+      <div class="row" style="margin:6px 0">${pbtn(setSrc(s, 'q1'), s.q1, 'examiner', '質問')}</div>
+      <div class="en">${esc(s.q1)}</div>
+      ${ans(setSrc(s, 'a1'), s.a1)}
+      <div class="tip">ポイント：${esc(s.a1_tip)}</div>
+    </div>
+    <div class="qa">
+      <b>No.2</b>
+      <div class="row" style="margin:6px 0">${pbtn(commonSrc('c10_no2'), COMMON.c10_no2.text, 'examiner', '指示')}</div>
+      <div class="muted">各コマの場面：</div>
+      <ol class="muted" style="margin:4px 0">${s.panels.map(p => `<li>${p.label ? `<b>${esc(p.label)}</b>：` : ''}${esc(p.jp)}</li>`).join('')}</ol>
+      ${ans(setSrc(s, 'a2'), s.a2)}
+    </div>
+    <div class="qa">
+      <b>No.3</b>
+      <div class="row" style="margin:6px 0">${pbtn(setSrc(s, 'q3'), s.q3, 'examiner', '質問')}</div>
+      <div class="en">${esc(s.q3)}</div>
+      ${ans(setSrc(s, 'a3_agree'), s.a3_agree)}
+      ${ans(setSrc(s, 'a3_disagree'), s.a3_disagree)}
+    </div>
+    <div class="qa">
+      <b>No.4</b>
+      <div class="row" style="margin:6px 0">${pbtn(setSrc(s, 'q4'), s.q4, 'examiner', '質問')}</div>
+      <div class="en">${esc(s.q4)}</div>
+      ${ans(setSrc(s, 'a4_yes'), s.a4_yes)}
+      ${ans(setSrc(s, 'a4_no'), s.a4_no)}
+    </div>
+  </div>`;
+}
+$('#studyBody').addEventListener('click', e => {
+  const b = e.target.closest('button[data-src]');
+  if (b){ play(b.dataset.src, b.dataset.text, b.dataset.role, +$('#studyRate').value); return; }
+  const t = e.target.closest('.ans.blur .txt');
+  if (t) t.parentElement.classList.remove('blur');
+});
+['#studySet', '#optBlur'].forEach(id => $(id).addEventListener('change', renderStudy));
+renderStudy();
+
+/* ---------- EXAM ---------- */
+let runId = 0, recStream = null, recorder = null, recChunks = [], recordings = [];
+let timerResolve = null, ynResolve = null;
+const Abort = Symbol('abort');
+const check = id => { if (id !== runId) throw Abort; };
+
+function setSay(text, speaking){
+  $('#sayBox').textContent = $('#optSub').checked ? text : (text ? '（字幕オフ）' : '');
+  $('#sayBox').classList.toggle('speaking', !!speaking);
+}
+function setHint(t){ $('#hintBox').textContent = ($('#optHint').checked && t) ? 'あなた → ' + t : ''; }
+async function say(id, text, src){
+  check(id);
+  setSay(text, true);
+  await play(src, text, 'examiner');
+  check(id);
+  $('#sayBox').classList.remove('speaking');
+}
+function waitTimer(id, sec, label){
+  return waitTimerRaw(id, sec, label).then(() => check(id));
+}
+function waitTimerRaw(id, sec, label){
+  return new Promise((res, rej) => {
+    const box = $('#timerBox'); box.style.display = 'block';
+    $('#timerLbl').textContent = label;
+    const t0 = Date.now();
+    const tick = () => {
+      if (id !== runId){ clearInterval(iv); rej(Abort); return; }
+      const left = Math.max(0, sec - (Date.now() - t0) / 1000);
+      $('#timerNum').textContent = Math.ceil(left) + '秒';
+      $('#timerBar').style.width = (left / sec * 100) + '%';
+      if (left <= 0) done();
+    };
+    const done = () => { clearInterval(iv); timerResolve = null; box.style.display = 'none'; res(); };
+    timerResolve = done;
+    const iv = setInterval(tick, 100); tick();
+  });
+}
+$('#nextBtn').onclick = () => timerResolve && timerResolve();
+
+async function ensureMic(){
+  if (!$('#optRec').checked) return false;
+  if (recStream) return true;
+  try { recStream = await navigator.mediaDevices.getUserMedia({audio: true}); return true; }
+  catch (e){ alert('マイクが使えないため、録音なしで進めます。'); $('#optRec').checked = false; return false; }
+}
+function recStart(){
+  if (!recStream) return;
+  recChunks = [];
+  try {
+    recorder = new MediaRecorder(recStream);
+    recorder.ondataavailable = e => e.data.size && recChunks.push(e.data);
+    recorder.start();
+    $('#recMark').textContent = '● 録音中';
+  } catch (e){ recorder = null; }
+}
+function recStop(label, key){
+  return new Promise(res => {
+    $('#recMark').textContent = '';
+    if (!recorder || recorder.state === 'inactive'){ res(); return; }
+    recorder.onstop = () => {
+      recordings.push({label, key, url: URL.createObjectURL(new Blob(recChunks, {type: recorder.mimeType}))});
+      res();
+    };
+    recorder.stop();
+  });
+}
+
+async function runExam(){
+  const id = ++runId;
+  const s = DATA.sets[+$('#examSet').value];
+  recordings.forEach(r => URL.revokeObjectURL(r.url)); recordings = [];
+  const useRec = await ensureMic();
+  $('#examSetup').style.display = 'none'; $('#examReview').style.display = 'none'; $('#examStage').style.display = 'block';
+  $('#examCard').innerHTML = ''; setSay(''); setHint('');
+  const step = t => $('#stepName').textContent = t;
+  const C = async cid => { await say(id, COMMON[cid].text, commonSrc(cid)); };
+  const reply = async cid => {
+    const c = COMMON[cid]; await C(cid);
+    if (c.reply){ setHint(c.reply); await waitTimer(id, c.time, '返答してください'); setHint(''); }
+  };
+  const answer = async (sec, label, key, recLabel) => {
+    if (useRec) recStart();
+    await waitTimer(id, sec, label);
+    if (useRec) await recStop(recLabel, key);
+  };
+
+  try {
+    if ($('#optGreet').checked){
+      step('入室');
+      setSay(''); setHint('ドアをノックして入室し、面接官に "Hello." とあいさつ');
+      await waitTimer(id, 4, '入室');
+      for (const cid of ['c01_card','c02_seat','c03_name','c04_grade','c05_how']) await reply(cid);
+    }
+    await reply('c06_start');
+    $('#examCard').innerHTML = cardHTML(s);
+
+    step('黙読 20秒');
+    await C('c07_silent');
+    setHint('声に出さずに読む。by doing so / in this way の文と、読みにくい単語をチェック');
+    await waitTimer(id, 20, '黙読');
+    setHint('');
+
+    step('音読');
+    await C('c08_aloud');
+    setHint('タイトルから、はっきり区切って読む');
+    await answer(60, '音読してください', 'passage', '音読');
+    setHint('');
+
+    step('No.1');
+    await C('c09_four');
+    await say(id, s.q1, setSrc(s, 'q1'));
+    setHint('By ~ing ... の形で。such / they は具体的に言い換える');
+    await answer(25, '答えてください', 'a1', 'No.1');
+    setHint('');
+
+    step('No.2 準備 20秒');
+    await C('c10_no2');
+    setHint('最初の文から始めて、過去形で。各コマ2文が目安');
+    await waitTimer(id, 20, '準備（頭の中で組み立てる）');
+    step('No.2');
+    await C('c11_begin');
+    await answer(75, 'イラストを説明してください', 'a2', 'No.2');
+    setHint('');
+
+    step('No.3');
+    await C('c12_turn');
+    $('#examCard').innerHTML = '<div class="hidden-card">カードは裏返しました（ここからはカードを見ずに答えます）</div>';
+    await say(id, s.q3, setSrc(s, 'q3'));
+    setHint('I agree. / I disagree. ＋ 理由2文');
+    await answer(35, '答えてください', 'a3', 'No.3');
+    setHint('');
+
+    step('No.4');
+    await say(id, s.q4, setSrc(s, 'q4'));
+    setHint('まず "Yes." か "No." だけ言って、ボタンを押す');
+    if (useRec) recStart();
+    $('#ynBox').style.display = 'flex'; $('#nextBtn').style.display = 'none';
+    let yn = 'yes';
+    await Promise.race([
+      waitTimer(id, 12, 'Yes / No で答えてください'),
+      new Promise(r => ynResolve = v => { yn = v; r(); })
+    ]);
+    ynResolve = null; if (timerResolve) timerResolve();
+    $('#ynBox').style.display = 'none'; $('#nextBtn').style.display = '';
+    check(id);
+    const w = yn === 'no' ? 'c14_whynot' : 'c13_why';
+    await C(w);
+    setHint('理由を2文で（Also, ... を使うと言いやすい）');
+    await waitTimer(id, 30, '理由を答えてください');
+    if (useRec) await recStop('No.4', 'a4');
+    setHint('');
+
+    step('退室');
+    await reply('c15_back');
+    $('#examCard').innerHTML = '';
+    await reply('c16_go');
+    setSay('お疲れさまでした。'); setHint('');
+    showReview(s);
+  } catch (e){
+    if (e !== Abort) console.error(e);
+    if (recorder && recorder.state !== 'inactive') recorder.stop();
+  } finally {
+    $('#ynBox').style.display = 'none'; $('#nextBtn').style.display = '';
+  }
+}
+$('#ynBox').addEventListener('click', e => { const b = e.target.closest('button'); if (b && ynResolve) ynResolve(b.dataset.yn); });
+$('#startExam').onclick = runExam;
+$('#stopExam').onclick = () => {
+  runId++; stopAudio(); timerResolve && timerResolve();
+  $('#timerBox').style.display = 'none'; $('#recMark').textContent = '';
+  $('#examStage').style.display = 'none'; $('#examSetup').style.display = 'block';
+};
+
+function showReview(s){
+  const models = {
+    passage: [[setSrc(s, 'passage'), s.title + '. ' + s.passage]],
+    a1: [[setSrc(s, 'a1'), s.a1]],
+    a2: [[setSrc(s, 'a2'), s.a2]],
+    a3: [[setSrc(s, 'a3_agree'), s.a3_agree], [setSrc(s, 'a3_disagree'), s.a3_disagree]],
+    a4: [[setSrc(s, 'a4_yes'), s.a4_yes], [setSrc(s, 'a4_no'), s.a4_no]],
+  };
+  const labels = {passage: '音読', a1: 'No.1', a2: 'No.2', a3: 'No.3', a4: 'No.4'};
+  const items = Object.keys(models).map(k => {
+    const r = recordings.find(x => x.key === k);
+    return `<div class="reviewitem">
+      <b>${labels[k]}</b>
+      ${r ? `<div class="muted">あなたの録音</div><audio controls src="${r.url}"></audio>` : '<div class="muted">（録音なし）</div>'}
+      ${models[k].map(([src, t]) => `<div class="ans"><div class="row" style="margin-bottom:4px">
+        <button class="btn ghost small" data-src="${src}" data-text="${esc(t)}">▶ 模範解答</button></div>
+        <div class="en">${esc(t)}</div></div>`).join('')}
+    </div>`;
+  }).join('');
+  $('#examStage').style.display = 'none';
+  const rv = $('#examReview');
+  rv.style.display = 'block';
+  rv.innerHTML = `<div class="box"><h3 style="margin-top:0">ふりかえり：${esc(s.title)}</h3>
+    <p class="muted">自分の録音と模範解答を聞き比べましょう。チェック：①黙った時間はなかったか ②No.2は過去形で話せたか ③No.3/No.4は理由を2文言えたか</p>
+    ${items}
+    <div class="row" style="margin-top:14px"><button class="btn" id="again">同じ問題でもう一度</button><button class="btn ghost" id="toSetup">問題を選び直す</button></div></div>`;
+  rv.querySelector('#again').onclick = runExam;
+  rv.querySelector('#toSetup').onclick = () => { rv.style.display = 'none'; $('#examSetup').style.display = 'block'; };
+  rv.onclick = e => { const b = e.target.closest('button[data-src]'); if (b) play(b.dataset.src, b.dataset.text, 'model'); };
+}
+</script>
+</body>
+</html>
